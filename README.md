@@ -10,7 +10,8 @@ Docker основы работы с контейнеризацией
 
 ### Решение
 
-задание выполняем на сервере vs-ubn4
+задание выполняем на сервере vs-ubn4  
+
 ставим Docker из репозитория , делаем по инструкции https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 
 ```
