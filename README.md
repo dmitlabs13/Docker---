@@ -108,6 +108,9 @@ For more examples and ideas, visit:
 # syntax=docker/dockerfile:1
 FROM ubuntu:22.04
 RUN apt-get update && apt-get install -y nginx python3 python3-pip
+
+# Запускаем Nginx
+CMD ["nginx", "-g", "daemon off;"]
 ```
 
 соберем имидж
@@ -115,6 +118,26 @@ RUN apt-get update && apt-get install -y nginx python3 python3-pip
  sudo docker build -t test-image-nginx.latest .
 
 ```
+
+проверяем, имидж появился
+
+```
+sadmin@lp-ubn4:~$ sudo docker images
+[sudo] password for sadmin:
+                                                                                                                                                                                          i Info →   U  In Use
+IMAGE                            ID             DISK USAGE   CONTENT SIZE   EXTRA
+hello-world:latest               96498ffd522e       25.9kB         9.49kB    U
+test-image-nginx.latest:latest   e19da8959b74        809MB          226MB
+sadmin@lp-ubn4:~$
+```
+
+запускаем
+```
+```
+
+проверяем страницу
+<img width="583" height="295" alt="image" src="https://github.com/user-attachments/assets/3ea9bfcf-0151-4ef9-a61c-7f3ebafd93b4" />
+
 
 
 
