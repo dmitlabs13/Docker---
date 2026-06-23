@@ -102,5 +102,21 @@ For more examples and ideas, visit:
  https://docs.docker.com/get-started/
 ```
 
+потренируемся, создадим простейший dockerfile с nginx и python
+
+```
+# syntax=docker/dockerfile:1
+FROM ubuntu:22.04
+RUN apt-get update && apt-get install -y nginx python3 python3-pip
+```
+
+соберем имидж
+```
+ sudo docker build -t test-image-nginx.latest .
+
+```
+
+
+
 
 
