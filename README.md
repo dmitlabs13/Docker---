@@ -131,12 +131,62 @@ test-image-nginx.latest:latest   e19da8959b74        809MB          226MB
 sadmin@lp-ubn4:~$
 ```
 
-запускаем
+запускаем и проверяем страницу  
+
+<img width="583" height="295" alt="image" src="https://github.com/user-attachments/assets/3ea9bfcf-0151-4ef9-a61c-7f3ebafd93b4" />
+
+
+меняем докер файл на
+
 ```
+# syntax=docker/dockerfile:1
+FROM alpine:3.18
+RUN apk add --no-cache nginx python3
+# Запускаем Nginx
+CMD ["nginx", "-g", "daemon off;"]
 ```
 
-проверяем страницу
-<img width="583" height="295" alt="image" src="https://github.com/user-attachments/assets/3ea9bfcf-0151-4ef9-a61c-7f3ebafd93b4" />
+собираем новый имидж 
+```
+sadmin@lp-ubn4:~$ sudo docker build -t  nginx-alpine3.18:3.18 .
+[+] Building 2.1s (8/8) FINISHED                                                                                                 docker:default
+ => [internal] load build definition from Dockerfile                                                                                       0.0s
+ => => transferring dockerfile: 184B                                                                                                       0.0s
+ => resolve image config for docker-image://docker.io/docker/dockerfile:1                                                                  0.8s
+ => CACHED docker-image://docker.io/docker/dockerfile:1@sha256:87999aa3d42bdc6bea60565083ee17e86d1f3339802f543c0d03998580f9cb89            0.0s
+ => => resolve docker.io/docker/dockerfile:1@sha256:87999aa3d42bdc6bea60565083ee17e86d1f3339802f543c0d03998580f9cb89                       0.0s
+ => [internal] load metadata for docker.io/library/alpine:3.18                                                                             0.7s
+ => [internal] load .dockerignore                                                                                                          0.0s
+ => => transferring context: 2B                                                                                                            0.0s
+ => [1/2] FROM docker.io/library/alpine:3.18@sha256:de0eb0b3f2a47ba1eb89389859a9bd88b28e82f5826b6969ad604979713c2d4f                       0.0s
+ => => resolve docker.io/library/alpine:3.18@sha256:de0eb0b3f2a47ba1eb89389859a9bd88b28e82f5826b6969ad604979713c2d4f                       0.0s
+ => CACHED [2/2] RUN apk add --no-cache nginx python3                                                                                      0.0s
+ => exporting to image                                                                                                                     0.1s
+ => => exporting layers                                                                                                                    0.0s
+ => => exporting manifest sha256:ead92b222f5405ba97cc65ad130a5240af09e943e4bb4db6e5964f36667b1507                                          0.0s
+ => => exporting config sha256:cce6ef711514bba33f6776d385e56b41b1ab69658105fef546ed5eb821c11a3c                                            0.0s
+ => => exporting attestation manifest sha256:4ff82ff2af0e6737c1e363a852be29224853e3fba01db44e77b6780d21f9f985                              0.1s
+ => => exporting manifest list sha256:ee9f2e655bb3ce83937c78c56155d5b80e1d92544d349d03fa676f5fe95c7658                                     0.0s
+ => => naming to docker.io/library/nginx-alpine3.18:3.18                                                                                   0.0s
+ => => unpacking to docker.io/library/nginx-alpine3.18:3.18
+```
+
+запускаем 
+```
+sadmin@lp-ubn4:~$ sudo docker run -d -p 8082:80 --name nginx-alpine  nginx-alpine3.18
+dfe5b0a3f3a63d64448c7958cb9dca7501c16974d193dca4c2750da9b6e1c299 nginx-alpine
+```
+смотрим появился запущеный контейнер. И он появился 
+```
+sadmin@lp-ubn4:~$ sudo docker ps
+CONTAINER ID   IMAGE                     COMMAND                  CREATED              STATUS              PORTS                                     NAMES
+dfe5b0a3f3a6   nginx-alpine3.18          "nginx -g 'daemon of…"   About a minute ago   Up About a minute   0.0.0.0:8082->80/tcp, [::]:8082->80/tcp   nginx-alpine
+66aa97b136fa   nginx-alpine3.18          "nginx -g 'daemon of…"   19 hours ago         Up 19 hours         0.0.0.0:8081->80/tcp, [::]:8081->80/tcp   naughty_wu
+d87e4752bed9   test-image-nginx.latest   "nginx -g 'daemon of…"   21 hours ago         Up 21 hours         0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   nostalgic_mcnulty
+```
+
+
+
 
 
 
