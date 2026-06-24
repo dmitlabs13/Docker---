@@ -185,6 +185,38 @@ dfe5b0a3f3a6   nginx-alpine3.18          "nginx -g 'daemon of…"   About a minu
 d87e4752bed9   test-image-nginx.latest   "nginx -g 'daemon of…"   21 hours ago         Up 21 hours         0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   nostalgic_mcnulty
 ```
 
+создаем файл index.html с таким содержимым
+```
+<h1>Hello otus!</h1>
+
+```
+
+обновляем докер файл
+```
+# syntax=docker/dockerfile:1
+FROM alpine:3.18
+RUN apk add --no-cache nginx python3
+
+#копируем файл
+COPY ./index.html /usr/share/nginx/html/index.html
+# Запускаем Nginx
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+пересобираем имидж
+```
+sudo docker build -t  nginx-alpine3.18_v2:3.18 .
+```
+
+запускаем
+```
+sadmin@lp-ubn4:~$ sudo docker run -d -p 8083:80 --name nginx-alpine_v2  nginx-alpine3.18_v2:3.18
+7ee776d3892e0bf513e0531bd7ddbb20e7a13553ff7a713bcc8798c7ad49afe8
+
+```
+
+
+
 
 
 
