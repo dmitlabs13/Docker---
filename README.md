@@ -190,6 +190,16 @@ d87e4752bed9   test-image-nginx.latest   "nginx -g 'daemon of…"   21 hours ago
 <h1>Hello otus!</h1>
 
 ```
+создаем новый конфиг nginx my-default.conf
+```
+{
+listen 80;
+ server_name localhost;
+ root /usr/share/nginx/html;
+  index index.html;
+ }
+
+```
 
 обновляем докер файл
 ```
@@ -197,23 +207,38 @@ d87e4752bed9   test-image-nginx.latest   "nginx -g 'daemon of…"   21 hours ago
 FROM alpine:3.18
 RUN apk add --no-cache nginx python3
 
-#копируем файл
+#копируем файл страницы
+
 COPY ./index.html /usr/share/nginx/html/index.html
+
+#Удаляем дефолтный конфиг
+RUN rm -f /etc/nginx/http.d/default.conf
+
+#копируем новый конфиг
+COPY my-default.conf /etc/nginx/http.d/my-default.conf
+
 # Запускаем Nginx
 CMD ["nginx", "-g", "daemon off;"]
+
 ```
 
 пересобираем имидж
 ```
-sudo docker build -t  nginx-alpine3.18_v2:3.18 .
+sudo docker build -t  nginx-alpine3.18_v3:3.18 .
 ```
 
 запускаем
 ```
-sadmin@lp-ubn4:~$ sudo docker run -d -p 8083:80 --name nginx-alpine_v2  nginx-alpine3.18_v2:3.18
-7ee776d3892e0bf513e0531bd7ddbb20e7a13553ff7a713bcc8798c7ad49afe8
+sudo docker run -d -p 8084:80 --name nginx-alpine_v3  nginx-alpine3.18_v3:3.18
+4297d2d760595269cf36688621083a26c24e85feb44821d9bee6edb38b0ed861
+
 
 ```
+
+Бинго!!!  
+<img width="445" height="205" alt="image" src="https://github.com/user-attachments/assets/75da00d2-53aa-4a95-a9db-8ccedd301ca7" />
+
+
 
 
 
