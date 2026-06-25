@@ -236,10 +236,10 @@ sudo docker run -d -p 8084:80 --name nginx-alpine_v3  nginx-alpine3.18_v3:3.18
 ```
 
 Бинго!!!  
-<img width="445" height="205" alt="image" src="https://github.com/user-attachments/assets/75da00d2-53aa-4a95-a9db-8ccedd301ca7" />
+<img width="445" height="205" alt="image" src="https://github.com/user-attachments/assets/75da00d2-53aa-4a95-a9db-8ccedd301ca7" />  
 
 
-
+## ссылка на имидж ghcr.io/dmitlabs13/nginx-alpine3.18_v3:3.18  
 
 
 ## Ответы на опросы:
